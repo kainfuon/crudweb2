@@ -1,0 +1,67 @@
+<form action="/product" method="POST" autocomplete="off">
+    <input type="hidden" name="_id" value="{{employee._id}}">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Pro_id</label>
+            <input type="text" class="form-control" name="_id" placeholder="Id" value="{{product._id}}">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Category_id</label>
+            <input type="text" class="form-control" name="category_id" placeholder="Category_id" value="{{product.category_id}}">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Avaible</label>
+            <input type="checkbox" class="form-control" name="available" checked="checked" value="{{product.available}}"/>
+        </div>
+        <div class="form-group col-md-6">
+            <label>Stock</label>
+            <input type="text" class="form-control" name="stock" placeholder="Stock" value="{{product.stock}}">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Colors</label>
+            <input type="text" class="form-control" name="colors" placeholder="Colors" value="{{product.colors}}">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Sizes</label>
+            <input type="text" class="form-control" name="sizes" placeholder="Sizes" value="{{product.sizes}}">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Original</label>
+            <input type="text" class="form-control" name="original" placeholder="Original" value="{{product.original}}">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Discount</label>
+            <input type="text" class="form-control" name="discount" placeholder="Discount" value="{{product.discount}}">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Price</label>
+            <input type="text" class="form-control" name="price" placeholder="Price" value="{{product.price}}">
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label>Description</label>
+        <input type="text" class="form-control" name="description" placeholder="Description" value="{{product.description}}">
+    </div>
+
+    
+
+    <div class="form-group">
+        <label>Name</label>
+        <input type="text" class="form-control" name="name" placeholder="Name" value="{{product.name}}">
+    </div>
+    <div class="form-group">
+        <label>Image</label>
+        <input type="text" class="form-control" name="img" placeholder="Image" value="{{product.img}}">
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-info"><i class="fa fa-database"></i> Submit</button>
+        
+    </div>
+</form>
