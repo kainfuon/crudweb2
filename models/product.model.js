@@ -11,7 +11,7 @@ const ProductSchema = mongoose.Schema({
   },
   available: {
     type: Boolean,
-    required: true,
+    // required: true,
   },
   stock: {
     type: Number,
@@ -26,22 +26,22 @@ const ProductSchema = mongoose.Schema({
     },
     discount: {
       type: Number,
-      required: true,
+      
     },
     price: {
       type: Number,
-      required: true,
+      
     },
   },
   description: String,
   reviews: [String], // Assuming reviews is an array of strings
   created: {
     type: Date,
-    required: true,
+    default: Date.now
   },
   updated: {
     type: Date,
-    required: true,
+    default: Date.now
   },
   name: {
     type: String,
@@ -49,7 +49,7 @@ const ProductSchema = mongoose.Schema({
   },
   img: {
     type: String,
-    required: true,
+    
   },
 });
 

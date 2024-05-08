@@ -14,13 +14,23 @@ router.post('/', (req, res) => {
 });
 
 function insertRecord(req, res) {
-    const product = new Product({
+    var product = new Product({
+        _id: req.body._id.toString(),
+        category_id: req.body.category_id,
+        available: true,
+        stock: req.body.stock,
         name: req.body.name,
         img: req.body.img,
+        colors: req.body.colors,
+        sizes: req.body.sizes,
+        price: {
+            original: req.body.original,
+            discount: req.body.discount,
+            price: req.body.price
+        },
         description: req.body.description,
-        stock: req.body.ratings,
-        price:req.body.price
-        
+
+
     });
     product.save()
         .then(product => {

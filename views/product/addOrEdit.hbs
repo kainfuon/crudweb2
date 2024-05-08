@@ -9,14 +9,10 @@
             <label>Category_id</label>
             <input type="text" class="form-control" name="category_id" placeholder="Category_id" value="{{product.category_id}}">
         </div>
-        <div class="form-group col-md-6">
+        {{!-- <div class="form-group col-md-6">
             <label>Avaible</label>
             <input type="checkbox" class="form-control" name="available" checked="checked" value="{{product.available}}"/>
-        </div>
-        <div class="form-group col-md-6">
-            <label>Stock</label>
-            <input type="text" class="form-control" name="stock" placeholder="Stock" value="{{product.stock}}">
-        </div>
+        </div> --}}
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
@@ -42,6 +38,10 @@
             <label>Price</label>
             <input type="text" class="form-control" name="price" placeholder="Price" value="{{product.price}}">
         </div>
+        <div class="form-group col-md-6">
+            <label>Stock</label>
+            <input type="text" class="form-control" name="stock" placeholder="Stock" value="{{product.stock}}">
+        </div>
     </div>
     
     <div class="form-group">
@@ -49,7 +49,6 @@
         <input type="text" class="form-control" name="description" placeholder="Description" value="{{product.description}}">
     </div>
 
-    
 
     <div class="form-group">
         <label>Name</label>
