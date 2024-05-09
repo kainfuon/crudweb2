@@ -21,7 +21,7 @@ mongoose.connect(MONGO_URL)
             img: product.img,
             price: product.price // Add the price field
         }));
-        console.log(products); // Log the product names, descriptions, images, and prices to the console
+        //console.log(products); // Log the product names, descriptions, images, and prices to the console
     })
     })
     .catch((err) => {

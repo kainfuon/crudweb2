@@ -9,8 +9,13 @@ router.get('/', (req, res) => {
     });
 });
 
+
+
 router.post('/', (req, res) => {
-    insertRecord(req, res);
+    if (req.body._id == '') 
+        insertRecord(req, res);
+    else
+        updatedRecord(req, res);
 });
 
 function insertRecord(req, res) {
@@ -41,8 +46,75 @@ function insertRecord(req, res) {
         });     
 }
 
-router.get('/', (req, res) => {
-    res.json('from list');
+function updatedRecord(req, res) {
+    Product.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true }, (err, doc) => {
+        if (!err) { res.redirect('product/list'); }
+        else {
+            if (err.name == 'ValidationError') {
+                handleValidationError(err, req.body);
+                res.render("product/addOrEdit", {
+                    viewTitle: 'Update Product',
+                    product: req.body
+                });
+            }
+            else
+                console.log('Error during record update : ' + err);
+        }
+    });
+}
+
+router.get('/list', (req, res) => {
+    Product.find({}, { products: { _id: 1, name: 1, description: 1, img: 1, price: 1 } })
+    .then(data => {
+        products = data.map(product => ({
+            id: product._id ? product._id.toString() : null, // Check if _id exists before converting to string
+            name: product.name,
+            description: product.description,
+            img: product.img,
+            price: product.price.price // Add the price field
+        }))
+        console.log(products);
+        res.render("product/list", {
+            list: products
+        })
+            
+    })
+        .catch(err => {
+            console.log(err);
+            res.status(400).send(err);
+            //console.log('Error in retrieving product list :' + err);
+        });
+});
+
+router.get('/:id', (req, res) => {
+    Product.findById(req.params.id)
+        .then(doc => {
+            if (doc) {
+                res.render("product/addOrEdit", {
+                    viewTitle: "Update Product",
+                    product: doc
+                });
+            } else {
+                console.log('Product not found');
+            }
+        })
+        .catch(err => {
+            console.log('Error in finding product: ' + err);
+        });
+});
+
+router.get('/delete/:id', (req, res) => {
+    Product.findByIdAndRemove(req.params.id)
+        .then(doc => {
+            if (doc) {
+                res.redirect('/product/list');
+            } else {
+                console.log('Product not found');
+            }
+        })
+        .catch(err => {
+            console.log('Error in product delete: ' + err);
+        });
 });
 
 module.exports = router;
