@@ -1,6 +1,8 @@
+<h3>{{viewTitle}}</h3>
+
 <form action="/product" method="POST" autocomplete="off">
-    <input type="hidden" name="_id" value="{{employee._id}}">
-    <div class="form-row">
+    <input type="hidden" name="_id" value="{{product._id}}">
+    {{!-- <div class="form-row">
         <div class="form-group col-md-6">
             <label>Pro_id</label>
             <input type="text" class="form-control" name="_id" placeholder="Id" value="{{product._id}}">
@@ -9,11 +11,8 @@
             <label>Category_id</label>
             <input type="text" class="form-control" name="category_id" placeholder="Category_id" value="{{product.category_id}}">
         </div>
-        {{!-- <div class="form-group col-md-6">
-            <label>Avaible</label>
-            <input type="checkbox" class="form-control" name="available" checked="checked" value="{{product.available}}"/>
-        </div> --}}
-    </div>
+        
+    </div> --}}
     <div class="form-row">
         <div class="form-group col-md-6">
             <label>Colors</label>

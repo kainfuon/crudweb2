@@ -10,13 +10,35 @@ router.get('/', (req, res) => {
     });
 });
 
-
-
 router.post('/', (req, res) => {
     if (req.body._id == '') 
         insertRecord(req, res);
-    else
-        updatedRecord(req, res);
+});
+
+router.put('/:productId', async (req, res) => {
+    try {
+        const updatedProduct = await Product.findOneAndUpdate({ _id: req.params.productId }, req.body, { new: true });
+        
+        if (updatedProduct) {
+            res.status(200).json({'product': 'Product updated successfully'});
+            // res.redirect('product/list');
+        } else {
+            res.render("product/addOrEdit", {
+                viewTitle: 'Update Product',
+                product: req.body
+            });
+        }
+    } catch (err) {
+        if (err.name == 'ValidationError') {
+            handleValidationError(err, req.body);
+            res.render("product/addOrEdit", {
+                viewTitle: 'Update Product',
+                product: req.body
+            });
+        } else {
+            console.log('Error during record update : ' + err);
+        }
+    }
 });
 
 function insertRecord(req, res) {
@@ -48,7 +70,8 @@ function insertRecord(req, res) {
 }
 
 function updatedRecord(req, res) {
-    Product.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true }, (err, doc) => {
+    let productId = mongoose.Types.ObjectId(req.params.productId);
+    Product.findOneAndUpdate({ _id: productId }, req.body, { new: true }, (err, doc) => {
         if (!err) { res.redirect('product/list'); }
         else {
             if (err.name == 'ValidationError') {
@@ -74,7 +97,7 @@ router.get('/list', (req, res) => {
             stock: product.stock,
             price: product.price // Add the price field
         }));
-        console.log(products);
+        //console.log(products);
         res.render("product/list", {
                 list: products
             })
@@ -103,13 +126,14 @@ router.get('/:id', (req, res) => {
         });
 });
 
-router.get('/delete/:id', (req, res) => {
-    Product.findByIdAndRemove(req.params.id)
+router.delete('/delete/:id', (req, res) => {
+    console.log(req.params.id);
+    Product.findByIdAndDelete(req.params.id)
         .then(doc => {
             if (doc) {
                 res.redirect('/product/list');
             } else {
-                console.log('Product not found');
+                console.log('Product can not found');
             }
         })
         .catch(err => {

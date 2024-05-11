@@ -1,3 +1,22 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.delete-product').click(function(e) {
+        e.preventDefault();
+        if (confirm('Are you sure to delete this record ?')) {
+            $.ajax({
+                url: $(this).attr('href'),
+                type: 'DELETE',
+                success: function(result) {
+                    location.reload();
+                }
+            });
+        }
+    });
+});
+</script>
+
+{{!-- <a href="/product/delete/{{this._id}}" class="delete-product"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a> --}}
 <h3><a class="btn btn-secondary" href="/product"><i class="fa fa-plus"></i> Create New</a> Product List</h3>
 <table class="table table-striped">
     <thead>
@@ -19,9 +38,13 @@
             <td>{{this.stock}}</td>
             <td>{{this.price.price}}</td>
             <td>{{this.description}}</td>
-            <td>
-                <a href="/product/{{this._id}}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
-                <a href="/product/delete/{{this._id}}" onclick="return confirm('Are you sure to delete this record ?');"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
+            <td>        
+                <form class="update-form" action="/product/{{this.id}}" method="put">
+                    <input type="hidden" name="_method" value="put">
+                    <button type="submit"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></button>
+                </form>
+                <a href="/product/delete/{{this.id}}" class="delete-product"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>  
+                {{!-- <a class="delete-product" href="/product/delete/{{this._id}}" onclick="return confirm('Are you sure to delete this record ?');"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>                 --}}
             </td>
         </tr>
         {{/each}}
