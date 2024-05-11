@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const MONGO_URL = 'mongodb+srv://commercial:05timE2NuctQg0Yy@cluster0.wfto06b.mongodb.net/things?retryWrites=true&w=majority&appName=Cluster0';
 const Product = mongoose.model('Product')
 
 router.get('/', (req, res) => {
@@ -64,27 +65,26 @@ function updatedRecord(req, res) {
 }
 
 router.get('/list', (req, res) => {
-    Product.find({}, { products: { _id: 1, name: 1, description: 1, img: 1, price: 1 } })
-    .then(data => {
+    Product.find().then((data) => {
         products = data.map(product => ({
             id: product._id ? product._id.toString() : null, // Check if _id exists before converting to string
             name: product.name,
             description: product.description,
             img: product.img,
-            price: product.price.price // Add the price field
-        }))
+            stock: product.stock,
+            price: product.price // Add the price field
+        }));
         console.log(products);
         res.render("product/list", {
-            list: products
-        })
-            
-    })
-        .catch(err => {
-            console.log(err);
-            res.status(400).send(err);
-            //console.log('Error in retrieving product list :' + err);
-        });
-});
+                list: products
+            })
+    }).catch((err) => {
+        console.log(err);
+        res.status(500).send("Internal server error");
+    });
+})
+
+
 
 router.get('/:id', (req, res) => {
     Product.findById(req.params.id)

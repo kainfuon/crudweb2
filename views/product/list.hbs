@@ -2,22 +2,22 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Id</th>
+            {{!-- <th>Id</th> --}}
             <th>Name</th>
+            {{!-- <th>Img</th> --}}
             <th>Stock</th>
             <th>Price</th>
-            <th>Create</th>
             <th>Description</th>
         </tr>
     </thead>
     <tbody>
         {{#each list}}
         <tr>
-            <td>{{this._id}}</td>
+            {{!-- <td>{{this._id}}</td> --}}
             <td>{{this.name}}</td>
-            <td>{{this.img}}</td>
+            {{!-- <td>{{this.img}}</td> --}}
             <td>{{this.stock}}</td>
-            <td>{{this.price}}</td>
+            <td>{{this.price.price}}</td>
             <td>{{this.description}}</td>
             <td>
                 <a href="/product/{{this._id}}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
