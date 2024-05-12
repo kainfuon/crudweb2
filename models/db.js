@@ -11,7 +11,7 @@ mongoose.connect(MONGO_URL)
 
     .then(() => {
         console.log('Database is connected');
-        
+    
         mongoose.connection.db.collection('products').find({}, { projection: { _id: 1, name: 1, description: 1, img: 1, price: 1 } }).toArray()
         .then(data => {
             products = data.map(product => ({

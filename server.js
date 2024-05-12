@@ -3,6 +3,7 @@ require('./models/db');
 const express = require('express');
 const path = require('path');
 const exphbs = require('express-handlebars');
+//const Product = require('./models/product.model');
 // const bodyParser = require('body-parser');
 
 const productController = require('./controllers/productController');
@@ -21,5 +22,7 @@ app.set('view engine', 'hbs');
 app.listen(3001, () => {
     console.log('Express server started at port : 3001');
 });
+
+
 
 app.use('/product', productController);

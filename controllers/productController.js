@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const MONGO_URL = 'mongodb+srv://commercial:05timE2NuctQg0Yy@cluster0.wfto06b.mongodb.net/things?retryWrites=true&w=majority&appName=Cluster0';
-const Product = mongoose.model('Product')
+//const MONGO_URL = 'mongodb+srv://commercial:05timE2NuctQg0Yy@cluster0.wfto06b.mongodb.net/things?retryWrites=true&w=majority&appName=Cluster0';
+const Product = mongoose.model('Product');
+
 
 router.get('/', (req, res) => {
     res.render('product/addOrEdit', {
@@ -13,6 +14,8 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     if (req.body._id == '') 
         insertRecord(req, res);
+    // else
+    //     updateRecord(req, res);
 });
 
 router.put('/:productId', async (req, res) => {
@@ -42,7 +45,7 @@ router.put('/:productId', async (req, res) => {
 });
 
 function insertRecord(req, res) {
-    var product = new Product({
+    const product = new Product({
         _id: req.body._id.toString(),
         category_id: req.body.category_id,
         available: true,
@@ -62,7 +65,8 @@ function insertRecord(req, res) {
     });
     product.save()
         .then(product => {
-            res.status(200).json({'product': 'Product added successfully'});
+            res.redirect('product/list');
+            //res.status(200).json({'product': 'Product added successfully'});
         })
         .catch(err => {
             res.status(400).send(err);
@@ -110,6 +114,7 @@ router.get('/list', (req, res) => {
 
 
 router.get('/:id', (req, res) => {
+    console.log(req.params.id);
     Product.findById(req.params.id)
         .then(doc => {
             if (doc) {
@@ -129,16 +134,45 @@ router.get('/:id', (req, res) => {
 router.delete('/delete/:id', (req, res) => {
     console.log(req.params.id);
     Product.findByIdAndDelete(req.params.id)
-        .then(doc => {
-            if (doc) {
-                res.redirect('/product/list');
+        .then(product => {
+            if (product) {
+                console.log('Delete successed!');
+                location.reload();
             } else {
-                console.log('Product can not found');
+                console.log('Product not found');
             }
         })
         .catch(err => {
             console.log('Error in product delete: ' + err);
         });
 });
+
+// router.delete('/delete/:id', async (req, res) => {
+//     console.log(req.params.id);
+//     //const Id = parseInt(req.params.id);
+//     Product.findById(req.params.id)
+//         .then(product => {
+//             console.log('Kết quả truy vấn:', product);
+//             console.log('ID của sản phẩm:', product._id);
+//         })
+//         .catch(err => {
+//             console.log('Lỗi khi truy vấn thông tin sản phẩm: ' + err);
+//         });
+//     // Product.findByIdAndDelete(req.params.id)
+//     //     .then(doc => {
+//     //         if (doc) {
+//     //             res.redirect('/product/list');
+//     //             console.log('Product delete succesed');
+//     //         } else {
+//     //             console.log('Product can not found');
+//     //             res.redirect('/product/list');
+//     //         }
+//     //     })
+//     //     .catch(err => {
+//     //         console.log('Error in product delete: ' + err);
+//     //     });
+// });
+
+
 
 module.exports = router;

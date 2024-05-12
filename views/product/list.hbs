@@ -43,8 +43,8 @@ $(document).ready(function() {
                     <input type="hidden" name="_method" value="put">
                     <button type="submit"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></button>
                 </form>
-                <a href="/product/delete/{{this.id}}" class="delete-product"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>  
-                {{!-- <a class="delete-product" href="/product/delete/{{this._id}}" onclick="return confirm('Are you sure to delete this record ?');"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>                 --}}
+                <a href="/product/delete/{{this.id}}" class="delete-product"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>   
+                {{!-- <a href="/product/delete/{{this._id}}" onclick="return confirm('Are you sure to delete this record ?');"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>                 --}}
             </td>
         </tr>
         {{/each}}
