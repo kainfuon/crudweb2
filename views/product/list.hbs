@@ -39,7 +39,7 @@ $(document).ready(function() {
             <td>{{this.price.price}}</td>
             <td>{{this.description}}</td>
             <td>        
-                <form class="update-form" action="/product/{{this.id}}" method="put">
+                <form class="update-form" action="/product/edit/{{this.id}}" method="get">
                     <input type="hidden" name="_method" value="put">
                     <button type="submit"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></button>
                 </form>

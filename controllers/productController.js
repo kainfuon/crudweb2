@@ -18,31 +18,31 @@ router.post('/', (req, res) => {
     //     updateRecord(req, res);
 });
 
-router.put('/:productId', async (req, res) => {
-    try {
-        const updatedProduct = await Product.findOneAndUpdate({ _id: req.params.productId }, req.body, { new: true });
+// router.put('/:productId', async (req, res) => {
+//     try {
+//         const updatedProduct = await Product.findOneAndUpdate({ _id: req.params.productId }, req.body, { new: true });
         
-        if (updatedProduct) {
-            res.status(200).json({'product': 'Product updated successfully'});
-            // res.redirect('product/list');
-        } else {
-            res.render("product/addOrEdit", {
-                viewTitle: 'Update Product',
-                product: req.body
-            });
-        }
-    } catch (err) {
-        if (err.name == 'ValidationError') {
-            handleValidationError(err, req.body);
-            res.render("product/addOrEdit", {
-                viewTitle: 'Update Product',
-                product: req.body
-            });
-        } else {
-            console.log('Error during record update : ' + err);
-        }
-    }
-});
+//         if (updatedProduct) {
+//             res.status(200).json({'product': 'Product updated successfully'});
+//             // res.redirect('product/list');
+//         } else {
+//             res.render("product/addOrEdit", {
+//                 viewTitle: 'Update Product',
+//                 product: req.body
+//             });
+//         }
+//     } catch (err) {
+//         if (err.name == 'ValidationError') {
+//             handleValidationError(err, req.body);
+//             res.render("product/addOrEdit", {
+//                 viewTitle: 'Update Product',
+//                 product: req.body
+//             });
+//         } else {
+//             console.log('Error during record update : ' + err);
+//         }
+//     }
+// });
 
 function insertRecord(req, res) {
     const product = new Product({
@@ -73,23 +73,23 @@ function insertRecord(req, res) {
         });     
 }
 
-function updatedRecord(req, res) {
-    let productId = mongoose.Types.ObjectId(req.params.productId);
-    Product.findOneAndUpdate({ _id: productId }, req.body, { new: true }, (err, doc) => {
-        if (!err) { res.redirect('product/list'); }
-        else {
-            if (err.name == 'ValidationError') {
-                handleValidationError(err, req.body);
-                res.render("product/addOrEdit", {
-                    viewTitle: 'Update Product',
-                    product: req.body
-                });
-            }
-            else
-                console.log('Error during record update : ' + err);
-        }
-    });
-}
+// function updatedRecord(req, res) {
+//     let productId = mongoose.Types.ObjectId(req.params.productId);
+//     Product.findOneAndUpdate({ _id: productId }, req.body, { new: true }, (err, doc) => {
+//         if (!err) { res.redirect('product/list'); }
+//         else {
+//             if (err.name == 'ValidationError') {
+//                 handleValidationError(err, req.body);
+//                 res.render("product/addOrEdit", {
+//                     viewTitle: 'Update Product',
+//                     product: req.body
+//                 });
+//             }
+//             else
+//                 console.log('Error during record update : ' + err);
+//         }
+//     });
+// }
 
 router.get('/list', (req, res) => {
     Product.find().then((data) => {
@@ -111,25 +111,43 @@ router.get('/list', (req, res) => {
     });
 })
 
-
-
-router.get('/:id', (req, res) => {
+router.get('/edit/:id', (req, res) => {
     console.log(req.params.id);
     Product.findById(req.params.id)
         .then(doc => {
             if (doc) {
+                console.log('Kết quả truy vấn:', doc);
+                console.log('ID của sản phẩm:', doc._id);
                 res.render("product/addOrEdit", {
-                    viewTitle: "Update Product",
+                    viewTitle: 'Update Product',
                     product: doc
                 });
-            } else {
-                console.log('Product not found');
             }
+            
         })
         .catch(err => {
-            console.log('Error in finding product: ' + err);
+            console.log('Lỗi khi truy vấn thông tin sản phẩm: ' + err);
         });
-});
+})
+
+
+// router.get('/:id', (req, res) => {
+//     console.log(req.params.id);
+//     Product.findById(req.params.id)
+//         .then(doc => {
+//             if (doc) {
+//                 res.render("product/addOrEdit", {
+//                     viewTitle: "Update Product",
+//                     product: doc
+//                 });
+//             } else {
+//                 console.log('Product not found');
+//             }
+//         })
+//         .catch(err => {
+//             console.log('Error in finding product: ' + err);
+//         });
+// });
 
 router.delete('/delete/:id', (req, res) => {
     console.log(req.params.id);

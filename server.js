@@ -8,6 +8,10 @@ const exphbs = require('express-handlebars');
 
 const productController = require('./controllers/productController');
 
+const expressHandlebars = require('express-handlebars');
+
+
+
 var app = express();
 
 app.use(express.json()); 
@@ -15,7 +19,14 @@ app.use(express.urlencoded({ extended: false }));
 
 
 app.set('views', path.join(__dirname, '/views/'));
-app.engine('hbs', exphbs.engine({ extname: 'hbs', defaultLayout: 'mainLayout', layoutsDir: __dirname + '/views/layouts/' }));
+app.engine('hbs', exphbs.engine({ 
+    extname: 'hbs', defaultLayout: 'mainLayout', 
+    layoutsDir: __dirname + '/views/layouts/', 
+    runtimeOptions: {
+        allowProtoPropertiesByDefault: true,
+        allowProtoMethodsByDefault: true,
+    }
+}));
 app.set('view engine', 'hbs');
 
 
