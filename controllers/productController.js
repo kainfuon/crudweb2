@@ -19,31 +19,7 @@ router.post('/', (req, res) => {
         updatedRecord(req, res);
 });
 
-// router.put('/:productId', async (req, res) => {
-//     try {
-//         const updatedProduct = await Product.findOneAndUpdate({ _id: req.params.productId }, req.body, { new: true });
-        
-//         if (updatedProduct) {
-//             res.status(200).json({'product': 'Product updated successfully'});
-//             // res.redirect('product/list');
-//         } else {
-//             res.render("product/addOrEdit", {
-//                 viewTitle: 'Update Product',
-//                 product: req.body
-//             });
-//         }
-//     } catch (err) {
-//         if (err.name == 'ValidationError') {
-//             handleValidationError(err, req.body);
-//             res.render("product/addOrEdit", {
-//                 viewTitle: 'Update Product',
-//                 product: req.body
-//             });
-//         } else {
-//             console.log('Error during record update : ' + err);
-//         }
-//     }
-// });
+
 
 function insertRecord(req, res) {
     const product = new Product({
@@ -94,18 +70,7 @@ function updatedRecord(req, res) {
             console.log('Lỗi khi cập nhật thông tin sản phẩm: ' + err);
             // res.redirect('/product/list');
         })
-        // if (!err) { res.redirect('product/list'); }
-        // else {
-        //     if (err.name == 'ValidationError') {
-        //         handleValidationError(err, req.body);
-        //         res.render("product/addOrEdit", {
-        //             viewTitle: 'Update Product',
-        //             product: req.body
-        //         });
-        //     }
-        //     else
-        //         console.log('Error during record update : ' + err);
-        // }
+        
     
 }
 
@@ -166,9 +131,6 @@ router.delete('/delete/:id', (req, res) => {
             console.log('Error in product delete: ' + err);
         });
 });
-
-// 
-
 
 
 module.exports = router;
