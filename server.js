@@ -60,7 +60,7 @@ app.engine('hbs', exphbs.engine({
 app.set('view engine', 'hbs');
 
 // Xử lý route "/login"
-app.get('/', (req, res) => {
+app.get('/login', (req, res) => {
     res.render("adminlogin");
     //res.send("<h1>Home Page</h1>")
 });
@@ -83,7 +83,8 @@ app.post('/login', (req, res) => {
         if (results.length > 0) {
             // Người dùng đã đăng nhập thành công
             const user = results[0];
-            res.send('Đăng nhập thành công. Thông tin người dùng: ' + JSON.stringify(user));
+            console.log('Đăng nhập thành công. Thông tin người dùng: ' + JSON.stringify(user));
+            res.redirect("/product/list");
         } else {
             // Sai thông tin đăng nhập hoặc không phải admin
             res.send('Sai thông tin đăng nhập hoặc không đủ quyền truy cập');
