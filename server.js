@@ -60,8 +60,9 @@ app.engine('hbs', exphbs.engine({
 app.set('view engine', 'hbs');
 
 // Xử lý route "/login"
-app.get('/login', (req, res) => {
-    res.sendFile(__dirname + '/views/admin/login.hbs');
+app.get('/', (req, res) => {
+    res.render("adminlogin");
+    //res.send("<h1>Home Page</h1>")
 });
 
 // Xử lý route "/login"
