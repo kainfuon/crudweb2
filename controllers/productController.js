@@ -14,8 +14,9 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     if (req.body._id == '') 
         insertRecord(req, res);
-    // else
-    //     updateRecord(req, res);
+    else
+        console.log('updated');
+        updatedRecord(req, res);
 });
 
 // router.put('/:productId', async (req, res) => {
@@ -73,27 +74,44 @@ function insertRecord(req, res) {
         });     
 }
 
-// function updatedRecord(req, res) {
-//     let productId = mongoose.Types.ObjectId(req.params.productId);
-//     Product.findOneAndUpdate({ _id: productId }, req.body, { new: true }, (err, doc) => {
-//         if (!err) { res.redirect('product/list'); }
-//         else {
-//             if (err.name == 'ValidationError') {
-//                 handleValidationError(err, req.body);
-//                 res.render("product/addOrEdit", {
-//                     viewTitle: 'Update Product',
-//                     product: req.body
-//                 });
-//             }
-//             else
-//                 console.log('Error during record update : ' + err);
-//         }
-//     });
-// }
+function updatedRecord(req, res) {
+    //let productId = mongoose.Types.ObjectId(req.params.productId);
+    let productId = req.body._id; // Lấy id từ body của request
+    console.log(productId);
+    // Product.findById(productId)
+    Product.findByIdAndUpdate({ _id: productId }, req.body, { new: true })
+        .then(updatedDoc => {
+            if (updatedDoc) {
+                // updatedDoc.name = req.body.name;
+                // updatedDoc.save();
+                console.log('Kết quả sau khi cập nhật:', updatedDoc);
+                res.redirect('/product/list'); // Chuyển hướng đến trang danh sách sản phẩm sau khi cập nhật thành công
+            } else {
+                console.log('Không tìm thấy sản phẩm để cập nhật');
+                }
+            })
+        .catch(err => {
+            console.log('Lỗi khi cập nhật thông tin sản phẩm: ' + err);
+            // res.redirect('/product/list');
+        })
+        // if (!err) { res.redirect('product/list'); }
+        // else {
+        //     if (err.name == 'ValidationError') {
+        //         handleValidationError(err, req.body);
+        //         res.render("product/addOrEdit", {
+        //             viewTitle: 'Update Product',
+        //             product: req.body
+        //         });
+        //     }
+        //     else
+        //         console.log('Error during record update : ' + err);
+        // }
+    
+}
 
 router.get('/list', (req, res) => {
     Product.find().then((data) => {
-        products = data.map(product => ({
+        const products = data.map(product => ({
             id: product._id ? product._id.toString() : null, // Check if _id exists before converting to string
             name: product.name,
             description: product.description,
@@ -131,23 +149,7 @@ router.get('/edit/:id', (req, res) => {
 })
 
 
-// router.get('/:id', (req, res) => {
-//     console.log(req.params.id);
-//     Product.findById(req.params.id)
-//         .then(doc => {
-//             if (doc) {
-//                 res.render("product/addOrEdit", {
-//                     viewTitle: "Update Product",
-//                     product: doc
-//                 });
-//             } else {
-//                 console.log('Product not found');
-//             }
-//         })
-//         .catch(err => {
-//             console.log('Error in finding product: ' + err);
-//         });
-// });
+
 
 router.delete('/delete/:id', (req, res) => {
     console.log(req.params.id);
@@ -165,31 +167,7 @@ router.delete('/delete/:id', (req, res) => {
         });
 });
 
-// router.delete('/delete/:id', async (req, res) => {
-//     console.log(req.params.id);
-//     //const Id = parseInt(req.params.id);
-//     Product.findById(req.params.id)
-//         .then(product => {
-//             console.log('Kết quả truy vấn:', product);
-//             console.log('ID của sản phẩm:', product._id);
-//         })
-//         .catch(err => {
-//             console.log('Lỗi khi truy vấn thông tin sản phẩm: ' + err);
-//         });
-//     // Product.findByIdAndDelete(req.params.id)
-//     //     .then(doc => {
-//     //         if (doc) {
-//     //             res.redirect('/product/list');
-//     //             console.log('Product delete succesed');
-//     //         } else {
-//     //             console.log('Product can not found');
-//     //             res.redirect('/product/list');
-//     //         }
-//     //     })
-//     //     .catch(err => {
-//     //         console.log('Error in product delete: ' + err);
-//     //     });
-// });
+// 
 
 
 
