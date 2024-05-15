@@ -70,6 +70,11 @@ router.post('/login', (req, res) => {
     });
 });
 
+router.get('/logout', (req, res) => {
+    // Destroy the session
+    res.render("product/adminlogin");
+  });
+
 router.get('/', (req, res) => {
     res.render('product/addOrEdit', {
         viewTitle: "Insert Product"
