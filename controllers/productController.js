@@ -3,7 +3,72 @@ const router = express.Router();
 const mongoose = require('mongoose');
 //const MONGO_URL = 'mongodb+srv://commercial:05timE2NuctQg0Yy@cluster0.wfto06b.mongodb.net/things?retryWrites=true&w=majority&appName=Cluster0';
 const Product = mongoose.model('Product');
+const mysql = require('mysql');
 
+const connection  = mysql.createConnection({
+    connectionLimit : 10,
+    host            : 'localhost',
+    user            : 'root',
+    password        : 'password',
+    database        : 'ecommerce',
+  
+});
+
+connection.connect((err) => {
+    if (err) {
+        console.error('Lỗi khi kết nối đến cơ sở dữ liệu MySQL: ' + err.stack);
+        return;
+    }
+    console.log('Kết nối thành công đến cơ sở dữ liệu MySQL');
+    
+    const query = 'SELECT * FROM users';
+    connection.query(query, (error, results, fields) => {
+        if (error) {
+            console.error('Lỗi khi truy vấn cơ sở dữ liệu: ' + error.stack);
+            return;
+        }
+
+        // In ra thông tin từng người dùng
+        for (let i = 0; i < results.length; i++) {
+            const user = results[i];
+            console.log('Người dùng:', user);
+        }
+    })
+});
+
+router.get('/login', (req, res) => {
+    
+    res.render("product/adminlogin");
+    //res.send("<h1>Home Page</h1>")
+});
+
+// Xử lý route "/login"
+router.post('/login', (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    // Truy vấn kiểm tra người dùng
+    const query = "SELECT * FROM users WHERE email = ? AND password = ? AND admin = 1";
+    connection.query(query, [email, password], (error, results, fields) => {
+        if (error) {
+            console.error('Lỗi khi truy vấn cơ sở dữ liệu: ' + error.stack);
+            res.status(500).send('Lỗi server');
+            return;
+        }
+
+        // Kiểm tra kết quả truy vấn
+        if (results.length > 0) {
+            // Người dùng đã đăng nhập thành công
+            const user = results[0];
+            console.log('Đăng nhập thành công. Thông tin người dùng: ' + JSON.stringify(user));
+            res.redirect("/product/list");
+        } else {
+            // Sai thông tin đăng nhập hoặc không phải admin
+            
+            res.send('Sai thông tin đăng nhập hoặc không đủ quyền truy cập');
+        }
+    });
+});
 
 router.get('/', (req, res) => {
     res.render('product/addOrEdit', {
