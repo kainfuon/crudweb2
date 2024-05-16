@@ -3,11 +3,14 @@ require('./models/db');
 const express = require('express');
 const path = require('path');
 const exphbs = require('express-handlebars');
-const mysql = require('mysql');
+//const mysql = require('mysql');
 
 const productController = require('./controllers/productController');
 
 const expressHandlebars = require('express-handlebars');
+const { title } = require('process');
+
+const mysql = require('mysql');
 
 const connection  = mysql.createConnection({
     connectionLimit : 10,
@@ -41,7 +44,6 @@ connection.connect((err) => {
 });
 
 
-
 var app = express();
 
 app.use(express.json()); 
@@ -61,6 +63,7 @@ app.set('view engine', 'hbs');
 
 // Xử lý route "/login"
 app.get('/login', (req, res) => {
+    
     res.render("adminlogin");
     //res.send("<h1>Home Page</h1>")
 });
@@ -87,10 +90,54 @@ app.post('/login', (req, res) => {
             res.redirect("/product/list");
         } else {
             // Sai thông tin đăng nhập hoặc không phải admin
+            
             res.send('Sai thông tin đăng nhập hoặc không đủ quyền truy cập');
         }
     });
 });
+
+app.get('/user', (req, res) => {
+    connection.query('SELECT CONCAT(first_name, " ", last_name) AS name, username, email, phone FROM users', (error, results) => {
+      if (error) {
+        console.error('Error executing query:', error);
+        res.status(500).send('Internal Server Error');
+      } else {
+        //console.log('render list product');
+        res.render("user", {
+            users : results
+        });
+      }
+    });
+  });
+
+
+app.get('/add', (req, res) => {
+    
+    res.render("userAdd");
+    //res.send("<h1>Home Page</h1>")
+});
+
+app.post('/add', (req, res) => {
+    const { username, email, phone, first_name, last_name } = req.body;
+  
+    if (!email) {
+      return res.status(400).send('Email là bắt buộc');
+    }
+  
+    connection.query(
+      'INSERT INTO users (username, email, phone, first_name, last_name) VALUES (?, ?, ?, ?, ?)',
+      [username, email, phone, first_name, last_name],
+      (error, results) => {
+        if (error) {
+          console.error('Lỗi khi thực hiện truy vấn:', error);
+          res.status(500).send('Lỗi máy chủ');
+        } else {
+          console.log('Tạo người dùng thành công');
+          res.redirect('user');
+        }
+      }
+    );
+  });
 
 app.listen(3001, () => {
     console.log('Express server started at port : 3001');

@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const Product = mongoose.model('Product');
 
 
+
 router.get('/', (req, res) => {
     res.render('product/addOrEdit', {
         viewTitle: "Insert Product"
@@ -131,6 +132,7 @@ router.delete('/delete/:id', (req, res) => {
             console.log('Error in product delete: ' + err);
         });
 });
+
 
 
 module.exports = router;
