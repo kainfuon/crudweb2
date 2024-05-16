@@ -118,15 +118,17 @@ app.get('/add', (req, res) => {
 });
 
 app.post('/add', (req, res) => {
-    const { username, email, phone, first_name, last_name } = req.body;
+    const { username, email, password, first_name, last_name } = req.body;
+    console.log(req.body);
   
-    if (!email) {
-      return res.status(400).send('Email là bắt buộc');
-    }
+    const currentDate = new Date();
+
+    const registeredAt = currentDate.toISOString().slice(0, 19).replace('T', ' '); // Định dạng datetime theo chuẩn MySQL // Chuyển đổi thành chuỗi ISO 8601 (YYYY-MM-DDTHH:mm:ss.sssZ)
+    const lastLogin = currentDate.toISOString().slice(0, 19).replace('T', ' '); // Định dạng datetime theo chuẩn MySQL;
   
     connection.query(
-      'INSERT INTO users (username, email, phone, first_name, last_name) VALUES (?, ?, ?, ?, ?)',
-      [username, email, phone, first_name, last_name],
+      'INSERT INTO users (username, email, password, first_name, last_name, admin, registeredAt, lastLogin) VALUES (?, ?, ?, ?, ?, 0, ?, ?)',
+      [username, email, password, first_name, last_name, registeredAt, lastLogin],
       (error, results) => {
         if (error) {
           console.error('Lỗi khi thực hiện truy vấn:', error);
@@ -137,6 +139,35 @@ app.post('/add', (req, res) => {
         }
       }
     );
+  });
+
+
+app.put('/user/:id', (req, res) => {
+    const userId = req.params.id;
+    console.log(userId);
+    // const { username, email, phone } = req.body;
+    // connection.query('UPDATE users SET username = ?, email = ?, phone = ? WHERE user_id = ?', [username, email, phone, userId], (error, results) => {
+    //   if (error) {
+    //     console.error('Error executing query:', error);
+    //     res.status(500).send('Internal Server Error');
+    //   } else {
+    //     res.send('User updated successfully');
+    //   }
+    // });
+  });
+  
+  // Route: Xóa người dùng (Delete)
+app.delete("/user/delete/:userId", (req, res) => {
+    const userId = req.params.id;
+    console.log(userId);
+    // connection.query('DELETE FROM users WHERE user_id = ?', [userId], (error, results) => {
+    //   if (error) {
+    //     console.error('Error executing query:', error);
+    //     res.status(500).send('Internal Server Error');
+    //   } else {
+    //     res.send('User deleted successfully');
+    //   }
+    // });
   });
 
 app.listen(3001, () => {

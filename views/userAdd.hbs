@@ -2,30 +2,35 @@
 
 <form action="/add" method="POST" autocomplete="off">
     
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label>Fist Name</label>
-            <input type="text" class="form-control" name="first_name:" placeholder="Fist Name" value="{{add.first_name}}">
-        </div>
-        <div class="form-group col-md-6">
-            <label>Last Name</label>
-            <input type="text" class="form-control" name="last_name:" placeholder="Last Name" value="{{add.last_name:}}">
-        </div>
-    </div>
-        
     <div class="form-group">
         <label>Username</label>
-        <input type="text" class="form-control" name="username" placeholder="Username" value="{{add.username}}">
+        <input type="text" class="form-control" name="username" placeholder="Username" value="{{add.username}}" required>
     </div>
 
     <div class="form-group">
         <label>Email</label>
-        <input type="text" class="form-control" name="email:" placeholder="Email" value="{{add.email:}}">
+        <input type="text" class="form-control" name="email" placeholder="Email" value="{{add.email}}" required>
     </div>
 
     <div class="form-group">
         <label>Password</label>
-        <input type="text" class="form-control" name="password" placeholder="Password" value="{{add.password}}">
+        <input type="text" class="form-control" name="password" placeholder="Password" value="{{add.password}}" required>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Fist Name</label>
+            <input type="text" class="form-control" name="first_name" placeholder="Fist Name" value="{{add.first_name}}">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Last Name</label>
+            <input type="text" class="form-control" name="last_name" placeholder="Last Name" value="{{add.last_name}}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Phone Number</label>
+        <input type="text" class="form-control" name="phone" placeholder="Phone Number" value="{{add.phone}}" required>
     </div>
 
     <div class="form-group">

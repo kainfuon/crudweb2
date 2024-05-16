@@ -5,12 +5,12 @@
     
     <div class="form-group">
         <label>Name</label>
-        <input type="text" class="form-control" name="name" placeholder="Name" value="{{product.name}}">
+        <input type="text" class="form-control" name="name" placeholder="Name" value="{{product.name}}" required>
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
             <label>Colors</label>
-            <input type="text" class="form-control" name="colors" placeholder="Colors" value="{{product.colors}}">
+            <input type="text" class="form-control" name="colors" placeholder="Colors" value="{{product.colors}}" >
         </div>
         <div class="form-group col-md-6">
             <label>Sizes</label>
@@ -21,19 +21,19 @@
     <div class="form-row">
         <div class="form-group col-md-6">
             <label>Original</label>
-            <input type="text" class="form-control" name="original" placeholder="Original" value="{{product.price.original}}">
+            <input type="text" class="form-control" name="original" placeholder="Original" value="{{product.price.original}}" required>
         </div>
         <div class="form-group col-md-6">
             <label>Discount</label>
-            <input type="text" class="form-control" name="discount" placeholder="Discount" value="{{product.price.discount}}">
+            <input type="text" class="form-control" name="discount" placeholder="Discount" value="{{product.price.discount}}" required>
         </div>
         <div class="form-group col-md-6">
             <label>Price</label>
-            <input type="text" class="form-control" name="price" placeholder="Price" value="{{product.price.price}}">
+            <input type="text" class="form-control" name="price" placeholder="Price" value="{{product.price.price}}" required>
         </div>
         <div class="form-group col-md-6">
             <label>Stock</label>
-            <input type="text" class="form-control" name="stock" placeholder="Stock" value="{{product.stock}}">
+            <input type="text" class="form-control" name="stock" placeholder="Stock" value="{{product.stock}}" required>
         </div>
     </div>
     
