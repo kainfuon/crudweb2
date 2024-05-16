@@ -17,33 +17,31 @@ $(document).ready(function() {
 </script>
 
 {{!-- <a href="/product/delete/{{this._id}}" class="delete-product"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a> --}}
-<h3><a class="btn btn-secondary" href="/product"><i class="fa fa-plus"></i> Create New</a> Product List</h3>
+<h3><a class="btn btn-secondary" href="/product/add"><i class="fa fa-plus"></i> Create New</a> User List</h3>
 <table class="table table-striped">
     <thead>
         <tr>
-            {{!-- <th>Id</th> --}}
+            <th>Name</th>
             <th>Username</th>
-            {{!-- <th>Img</th> --}}
             <th>Email</th>
             <th>Phone</th>
             
         </tr>
     </thead>
     <tbody>
-        {{#each user}}
+        {{#each users}}
         <tr>
-            {{!-- <td>{{this._id}}</td> --}}
+            <td>{{this.name}}</td>
             <td>{{this.username}}</td>
-            {{!-- <td>{{this.img}}</td> --}}
             <td>{{this.email}}</td>
             <td>{{this.phone}}</td>
             
             <td>        
-                <form class="update-form" action="/product/edit/{{this.id}}" method="get">
+                <form class="update-form" action="/product/user/{{this.id}}" method="get">
                     <input type="hidden" name="_method" value="put">
                     <button type="submit"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></button>
                 </form>
-                <a href="/product/delete/{{this.id}}" class="delete-user"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>   
+                <a href="/product/user/delete/{{this.id}}" class="delete-user"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>   
                 {{!-- <a href="/product/delete/{{this._id}}" onclick="return confirm('Are you sure to delete this record ?');"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>                 --}}
             </td>
         </tr>

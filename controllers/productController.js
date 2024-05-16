@@ -70,10 +70,79 @@ router.post('/login', (req, res) => {
     });
 });
 
-router.get('/logout', (req, res) => {
-    // Destroy the session
-    res.render("product/adminlogin");
+// router.get('/logout', (req, res) => {
+//     // Destroy the session
+//     res.render("product/adminlogin");
+//   });
+
+router.get('/user', (req, res) => {
+    connection.query('SELECT CONCAT(first_name, " ", last_name) AS name, username, email, phone FROM users', (error, results) => {
+      if (error) {
+        console.error('Error executing query:', error);
+        res.status(500).send('Internal Server Error');
+      } else {
+        //console.log('render list product');
+        res.render("product/user", {
+            users : results
+        });
+      }
+    });
   });
+
+  router.get('/add', (req, res) => {
+    //res.send("<h1>Home Page</h1>");
+    res.render("product/userAdd");
+  });
+
+  router.post('/add', (req, res) => {
+    console.log("add ><");
+    res.redirect("product/user");
+    // const { username, email, phone, first_name, last_name } = req.body;
+    // connection.query('INSERT INTO users (username, email, phone, first_name, last_name) VALUES (?, ?, ?, ?, ?)', 
+    // [username, email, phone, first_name, last_name], (error, results) => {
+    //   if (error) {
+    //     console.error('Error executing query:', error);
+    //     res.status(500).send('Internal Server Error');
+    //   } else {
+    //     console.log('User created successfully');
+    //     res.render("product/userAddOrEdit");
+    //   }
+    // });
+  });
+  
+  // Route: Cập nhật thông tin người dùng (Update)
+  router.put('/user/:id', (req, res) => {
+    const userId = req.params.id;
+    const { username, email, phone } = req.body;
+    connection.query('UPDATE users SET username = ?, email = ?, phone = ? WHERE user_id = ?', [username, email, phone, userId], (error, results) => {
+      if (error) {
+        console.error('Error executing query:', error);
+        res.status(500).send('Internal Server Error');
+      } else {
+        res.send('User updated successfully');
+      }
+    });
+  });
+  
+  // Route: Xóa người dùng (Delete)
+  router.delete('/user/delete/:id', (req, res) => {
+    const userId = req.params.id;
+    connection.query('DELETE FROM users WHERE user_id = ?', [userId], (error, results) => {
+      if (error) {
+        console.error('Error executing query:', error);
+        res.status(500).send('Internal Server Error');
+      } else {
+        res.send('User deleted successfully');
+      }
+    });
+  });
+
+
+
+
+
+
+
 
 router.get('/', (req, res) => {
     res.render('product/addOrEdit', {
@@ -201,6 +270,7 @@ router.delete('/delete/:id', (req, res) => {
             console.log('Error in product delete: ' + err);
         });
 });
+
 
 
 module.exports = router;
