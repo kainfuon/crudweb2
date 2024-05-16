@@ -19,11 +19,11 @@
             <td>{{this.phone}}</td>
             
             <td>
-                <form class="update-form" action="/user/{{this.id}}" method="get" data-id="{{this.id}}">
+                <form class="update-form" action="/user/{{this.user_id}}" method="get" data-id="{{this.user_id}}">
                     <input type="hidden" name="_method" value="put">
                     <button type="submit"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></button>
                 </form>
-                <a href="#" class="delete-user" data-id="{{this.id}}"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
+                <a href="#" class="delete-user" data-id="{{this.user_id}}"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
             </td>
             {{!-- <td>        
                 <form class="update-form" action="/user/{{this.id}}" method="get">
@@ -46,9 +46,18 @@
     function setupDeleteUserEvent() {
         $('.delete-user').on('click', function(e) {
             e.preventDefault();
+            console.log($(this).attr('data-id'));
             let userId = $(this).attr('data-id');
+            console.log (userId);
             if (confirm('Are you sure to delete this user?')) {
-                window.location.href = `/user/delete/${userId}`;
+                $.ajax({
+                    url: `/user/delete/${userId}`,
+                    type: 'DELETE',
+                    success: function(result) {
+                        // Do something with the result
+                        location.reload();
+                    }
+                });
             }
         });
     }

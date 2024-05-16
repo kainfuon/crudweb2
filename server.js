@@ -97,7 +97,7 @@ app.post('/login', (req, res) => {
 });
 
 app.get('/user', (req, res) => {
-    connection.query('SELECT CONCAT(first_name, " ", last_name) AS name, username, email, phone FROM users', (error, results) => {
+    connection.query('SELECT CONCAT(first_name, " ", last_name) AS name, username, email, phone, user_id FROM users', (error, results) => {
       if (error) {
         console.error('Error executing query:', error);
         res.status(500).send('Internal Server Error');
@@ -145,29 +145,29 @@ app.post('/add', (req, res) => {
 app.put('/user/:id', (req, res) => {
     const userId = req.params.id;
     console.log(userId);
-    // const { username, email, phone } = req.body;
-    // connection.query('UPDATE users SET username = ?, email = ?, phone = ? WHERE user_id = ?', [username, email, phone, userId], (error, results) => {
-    //   if (error) {
-    //     console.error('Error executing query:', error);
-    //     res.status(500).send('Internal Server Error');
-    //   } else {
-    //     res.send('User updated successfully');
-    //   }
-    // });
+    const { username, email, phone } = req.body;
+    connection.query('UPDATE users SET username = ?, email = ?, phone = ? WHERE user_id = ?', [username, email, phone, userId], (error, results) => {
+      if (error) {
+        console.error('Error executing query:', error);
+        res.status(500).send('Internal Server Error');
+      } else {
+        res.send('User updated successfully');
+      }
+    });
   });
   
   // Route: Xóa người dùng (Delete)
 app.delete("/user/delete/:userId", (req, res) => {
-    const userId = req.params.id;
+    const userId = req.params.userId;
     console.log(userId);
-    // connection.query('DELETE FROM users WHERE user_id = ?', [userId], (error, results) => {
-    //   if (error) {
-    //     console.error('Error executing query:', error);
-    //     res.status(500).send('Internal Server Error');
-    //   } else {
-    //     res.send('User deleted successfully');
-    //   }
-    // });
+    connection.query('DELETE FROM users WHERE user_id = ?', [userId], (error, results) => {
+      if (error) {
+        console.error('Error executing query:', error);
+        res.status(500).send('Internal Server Error');
+      } else {
+        res.send('User deleted successfully');
+      }
+    });
   });
 
 app.listen(3001, () => {
