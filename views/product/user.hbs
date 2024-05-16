@@ -1,0 +1,50 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.delete-user').click(function(e) {
+        e.preventDefault();
+        if (confirm('Are you sure to delete this record ?')) {
+            $.ajax({
+                url: $(this).attr('href'),
+                type: 'DELETE',
+                success: function(result) {
+                    location.reload();
+                }
+            });
+        }
+    });
+});
+</script>
+
+{{!-- <a href="/product/delete/{{this._id}}" class="delete-product"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a> --}}
+<h3><a class="btn btn-secondary" href="/product/add"><i class="fa fa-plus"></i> Create New</a> User List</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Phone</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        {{#each users}}
+        <tr>
+            <td>{{this.name}}</td>
+            <td>{{this.username}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.phone}}</td>
+            
+            <td>        
+                <form class="update-form" action="/product/user/{{this.id}}" method="get">
+                    <input type="hidden" name="_method" value="put">
+                    <button type="submit"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></button>
+                </form>
+                <a href="/product/user/delete/{{this.id}}" class="delete-user"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>   
+                {{!-- <a href="/product/delete/{{this._id}}" onclick="return confirm('Are you sure to delete this record ?');"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>                 --}}
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
