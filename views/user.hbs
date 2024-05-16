@@ -19,10 +19,10 @@
             <td>{{this.phone}}</td>
             
             <td>
-                <form class="update-form" action="/user/{{this.user_id}}" method="get" data-id="{{this.user_id}}">
+                {{!-- <form class="update-form" action="/user/{{this.user_id}}" method="get" data-id="{{this.user_id}}">
                     <input type="hidden" name="_method" value="put">
                     <button type="submit"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></button>
-                </form>
+                </form> --}}
                 <a href="#" class="delete-user" data-id="{{this.user_id}}"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
             </td>
             {{!-- <td>        

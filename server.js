@@ -87,7 +87,7 @@ app.post('/login', (req, res) => {
             // Người dùng đã đăng nhập thành công
             const user = results[0];
             console.log('Đăng nhập thành công. Thông tin người dùng: ' + JSON.stringify(user));
-            res.redirect("/product/list");
+            res.redirect("/user");
         } else {
             // Sai thông tin đăng nhập hoặc không phải admin
             
@@ -142,7 +142,7 @@ app.post('/add', (req, res) => {
   });
 
 
-app.put('/user/:id', (req, res) => {
+app.put('/user/:userId', (req, res) => {
     const userId = req.params.id;
     console.log(userId);
     const { username, email, phone } = req.body;
