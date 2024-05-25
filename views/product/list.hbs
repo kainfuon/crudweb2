@@ -40,7 +40,7 @@ $(document).ready(function() {
             <td>{{this.description}}</td>
             <td>        
                 <form class="update-form" action="/product/edit/{{this.id}}" method="get">
-                    <input type="hidden" name="_method" value="put">
+                    <input type="hidden" name="_method" value="get">
                     <button type="submit"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></button>
                 </form>
                 <a href="/product/delete/{{this.id}}" class="delete-product"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>   

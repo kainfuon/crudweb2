@@ -118,7 +118,7 @@ app.get('/add', (req, res) => {
 });
 
 app.post('/add', (req, res) => {
-    const { username, email, password, first_name, last_name } = req.body;
+    const { username, email, password, first_name, last_name, phone } = req.body;
     console.log(req.body);
   
     const currentDate = new Date();
@@ -127,8 +127,8 @@ app.post('/add', (req, res) => {
     const lastLogin = currentDate.toISOString().slice(0, 19).replace('T', ' '); // Định dạng datetime theo chuẩn MySQL;
   
     connection.query(
-      'INSERT INTO users (username, email, password, first_name, last_name, admin, registeredAt, lastLogin) VALUES (?, ?, ?, ?, ?, 0, ?, ?)',
-      [username, email, password, first_name, last_name, registeredAt, lastLogin],
+      'INSERT INTO users (username, email, phone, password, first_name, last_name, admin, registeredAt, lastLogin) VALUES (?, ?, ?, ?, ?, ?, 0, ?, ?)',
+      [username, email, phone, password, first_name, last_name, registeredAt, lastLogin],
       (error, results) => {
         if (error) {
           console.error('Lỗi khi thực hiện truy vấn:', error);
